@@ -16,9 +16,12 @@
  */
 package org.apache.camel.util.toolbox;
 
+import java.util.Comparator;
+
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 import org.apache.camel.processor.aggregate.AggregationStrategyBeanAdapter;
 import org.apache.camel.processor.aggregate.GroupedExchangeAggregationStrategy;
+import org.apache.camel.processor.aggregate.ListAggregationStrategy;
 import org.apache.camel.processor.aggregate.UseLatestAggregationStrategy;
 import org.apache.camel.processor.aggregate.UseOriginalAggregationStrategy;
 
@@ -121,6 +124,14 @@ public final class AggregationStrategies {
         adapter.setAllowNullOldExchange(true);
         adapter.setAllowNullNewExchange(true);
         return adapter;
+    }
+
+    public static <T> AggregationStrategy list(Class<T> clazz) {
+        return new ListAggregationStrategy<T>(null);
+    }
+
+    public static <T> AggregationStrategy list(Class<T> clazz, Comparator<T> comparator) {
+        return new ListAggregationStrategy<T>(comparator);
     }
 
 }
